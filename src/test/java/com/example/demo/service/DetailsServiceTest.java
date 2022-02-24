@@ -1,28 +1,46 @@
 package com.example.demo.service;
 
+import com.example.demo.daoimpl.DetailsDAOImpl;
 import com.example.demo.dto.Details;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.Mockito.when;
+import org.mockito.junit.MockitoJUnitRunner;
 
-@SpringBootTest
-@RunWith(SpringJUnit4ClassRunner.class)
-public class DetailsServiceTest extends TestCase {
+import static org.mockito.MockitoAnnotations.initMocks;
+@RunWith(MockitoJUnitRunner.class)
+public class DetailsServiceTest {
 
-    @Autowired
+    @InjectMocks
     private DetailsService detailsService;
+    @Mock
+    DetailsDAOImpl dao;
 
+    @Before
+    public void init() {
+        initMocks(this);
+    }
     @Test
     public void countUserIdTest(){
+
+        Long count = 10L;
+        when(dao.getDetails()).thenReturn(count);
+
         Long totalRecords = detailsService.getDetails();
-        assertTrue(totalRecords>0);
+        Assert.assertEquals(count,totalRecords);
     }
     @Test
     public void updateTitle(){
-        Details details = detailsService.getUpdatedDetails();
-        assertNotNull(details);
+        Details d = new Details();
+        d.setTitle("1800floweres");
+        d.setBody("1800floweres");
+        d.setId(4);
+        when(dao.updateUserDetails(4,d)).thenReturn(d);
+        Details details = detailsService.updateUserDetails(4,d);
+        Assert.assertEquals(d,details);
     }
 }
