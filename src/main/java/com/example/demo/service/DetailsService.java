@@ -14,7 +14,7 @@ public class DetailsService {
     public Long getDetails(){
         return detailsDAO.getDetails();
     }
-    public Details getUpdatedDetails(){
-       return detailsDAO.getUpdatedDetails();
+    public Details updateUserDetails(Integer id ,Details details){
+       return detailsDAO.updateUserDetails(id,details);
     }
 }
