@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
@@ -24,12 +26,11 @@ public class DetailsDAOImpl implements DetailsDAO {
 
     }
 
-    public Details getUpdatedDetails(){
+    public Details updateUserDetails(Integer id, Details details){
         try{
-            Details details = new Details();
-            details.setTitle("1800Flowers");
-            details.setBody("1800Flowers");
-            ResponseEntity<Details> exchange = new RestTemplate().exchange(DemoConstants.UPDATE_URI, HttpMethod.PUT, new HttpEntity<Details>(details), Details.class);
+            Map<String,Integer> map = new HashMap();
+            map.put("id",id);
+            ResponseEntity<Details> exchange = new RestTemplate().exchange(DemoConstants.UPDATE_URI, HttpMethod.PUT, new HttpEntity<Details>(details), Details.class,map);
             return exchange.getBody();
         }catch (Exception e){
             System.out.println("Exception is occured while updating the index:"+e.getMessage());
