@@ -5,5 +5,5 @@ import com.example.demo.dto.Details;
 
 public interface DetailsDAO {
     public Long getDetails();
-    public Details getUpdatedDetails();
+    public Details updateUserDetails(Integer id,Details details);
 }
